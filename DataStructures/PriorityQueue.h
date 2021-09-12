@@ -1,3 +1,6 @@
+#ifdef _PRACTICE_PRIORITY_QUEUE_H_
+#define _PRACTICE_PRIORITY_QUEUE_H_
+
 #include "iostream"
 
 #define MAX_PRIORITY_QUEUE_SIZE 100
@@ -124,3 +127,4 @@ void PriorityQueue::percolate_down (int hole)
 		percolate_down (min);
 	}
 }
+#endif /* _PRACTICE_PRIORITY_QUEUE_H_ */

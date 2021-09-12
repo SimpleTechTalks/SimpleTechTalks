@@ -1,3 +1,6 @@
+#ifndef _PRACTICE_QUEUE_DEFINITION_H_
+#define _PRACTICE_QUEUE_DEFINITION_H_
+
 #include "StackDefine.h"
 
 class Queue
@@ -340,3 +343,5 @@ int QueueUsingStack::atFront ()
     }
     return m_dequeue_stack -> atTop ();
 }
+
+#endif /* _PRACTICE_QUEUE_DEFINITION_H_ */

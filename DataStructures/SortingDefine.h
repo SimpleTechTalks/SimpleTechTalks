@@ -1,3 +1,6 @@
+#ifndef _PRACTICE_SORTING_DEFINITION_H_
+#define _PRACTICE_SORTING_DEFINITION_H_
+
 class Sorting {
     private:
         int *m_array;
@@ -31,3 +34,4 @@ void Sorting::bubble_sort () {
         }
     }
 }
+#endif /* _PRACTICE_SORTING_DEFINITION_H_ */

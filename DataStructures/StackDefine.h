@@ -1,3 +1,6 @@
+#ifndef _PRACTICE_STACK_DEFINITION_H_
+#define _PRACTICE_STACK_DEFINITION_H_
+
 class Stack
 {
     private:
@@ -578,3 +581,5 @@ class DoubleStack
             cout << endl;
         }
 };
+
+#endif /* _PRACTICE_STACK_DEFINITION_H_ */

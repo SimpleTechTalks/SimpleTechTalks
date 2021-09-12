@@ -1,3 +1,6 @@
+#ifndef _PRACTICE_GRAPH_DEFINE_H_
+#define _PRACTICE_GRAPH_DEFINE_H_
+
 #include "QueueDefine.h"
 #include "StackDefine.h"
 
@@ -266,3 +269,5 @@ bool Graph::printMotherVertex ()
         return false;
     }
 }
+
+#endif /* _PRACTICE_GRAPH_DEFINE_H_ */
