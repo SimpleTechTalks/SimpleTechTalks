@@ -1,3 +1,6 @@
+#ifndef _PRACTICE_MAXIMUM_HEAP_H_
+#define _PRACTICE_MAXIMUM_HEAP_H_
+
 #include "iostream"
 
 #define MAX_PRIORITY_QUEUE_SIZE 100
@@ -116,3 +119,5 @@ void MaxHeap::percolate_down (int hole)
 		percolate_down (min);
 	}
 }
+
+#endif /* _PRACTICE_MAXIMUM_HEAP_H_ */

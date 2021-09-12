@@ -1,3 +1,6 @@
+#ifndef _PRACTICE_LINKED_LIST_H_
+#define _PRACTICE_LINKED_LIST_H_
+
 class LinkedList
 {
     public:
@@ -486,3 +489,5 @@ LinkedList* find_intersection_node (LinkedList* list1, LinkedList* list2)
     }
     return NULL;
 }
+
+#endif /* _PRACTICE_LINKED_LIST_H_ */
