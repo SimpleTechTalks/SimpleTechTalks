@@ -8,64 +8,66 @@
 #include "iostream"
 
 
-float prices[] = {341, 328.85, 353,
- 355.6,
-358.55,
-350.55,
-353.55,
-370.65,
- 364.3,
- 360.8,
- 357.2,
- 355.2,
-359.85,
- 372.7,
-   367,
-371.15,
- 367.1,
-368.15,
-378.55,
- 383.9,
- 381.1,
- 387.7,
- 387.6,
- 389.6,
-383.65,
-395.65,
-405.05,
- 394.2,
-394.95,
-390.15,
-407.25,
-406.25,
- 395.6,
- 389.5,
-399.55,
- 415.2,
-411.75,
-402.35,
-406.95,
-393.15,
-390.15,
-392.25,
- 394.8,
-397.05,
- 393.1,
- 355.1,
-335.95,
- 333.1,
- 310.7,
- 282.1,
-282.35,
-275.65,
-280.95,
- 283.7,
-294.85,
-302.55,
- 298.6,
-294.45,
-303.85,
-307.25};
+float prices[]  =  {341,
+                    328.85,
+                    353,
+                    355.6,
+                    358.55,
+                    350.55,
+                    353.55,
+                    370.65,
+                    364.3,
+                    360.8,
+                    357.2,
+                    355.2,
+                    359.85,
+                    372.7,
+                    367,
+                    371.15,
+                    367.1,
+                    368.15,
+                    378.55,
+                    383.9,
+                    381.1,
+                    387.7,
+                    387.6,
+                    389.6,
+                    383.65,
+                    395.65,
+                    405.05,
+                    394.2,
+                    394.95,
+                    390.15,
+                    407.25,
+                    406.25,
+                    395.6,
+                    389.5,
+                    399.55,
+                    415.2,
+                    411.75,
+                    402.35,
+                    406.95,
+                    393.15,
+                    390.15,
+                    392.25,
+                    394.8,
+                    397.05,
+                    393.1,
+                    355.1,
+                    335.95,
+                    333.1,
+                    310.7,
+                    282.1,
+                    282.35,
+                    275.65,
+                    280.95,
+                    283.7,
+                    294.85,
+                    302.55,
+                    298.6,
+                    294.45,
+                    303.85,
+                    307.25};
 
 #define DISTANCE 10
 #define CHECK_RANGE(X) (X > peak_1_low && X < peak_1_high) || ((X > peak_2_low && X < peak_2_high))
@@ -114,7 +116,6 @@ void find_peak_troughs (float* arr, int size)
         for (int j = 0; j < size; j++)
         {
             if (CHECK_RANGE_TROUGH (j)) {
-                cout << j << " ";
                 continue;
             }
             if (index == -1 || arr[index] > arr[j]) {
@@ -122,13 +123,13 @@ void find_peak_troughs (float* arr, int size)
             }
         }
         ASSIGN_VALUE_TROUGH(i) = index;
-        cout << endl;
     }
-    cout << peak_1 << "   " << peak_2 << "   " << peak_3 << endl;
-    cout << arr[peak_1] << "   " << arr[peak_2] << "   " << arr[peak_3] << endl;
-
-    cout << trough_1 << "   " << trough_2 << "   " << trough_3 << endl;
-    cout << arr[trough_1] << "   " << arr[trough_2] << "   " << arr[trough_3] << endl;
+    cout << "Peak 1 index: " << peak_1 << " Value: " << arr[peak_1] << endl;
+    cout << "Peak 2 index: " << peak_2 << " Value: " << arr[peak_2] << endl;
+    cout << "Peak 3 index: " << peak_3 << " Value: " << arr[peak_3] << endl;
+    cout << "Trough 1 index: " << trough_1 << " Value: " << arr[trough_1] << endl;
+    cout << "Trough 2 index: " << trough_2 << " Value: " << arr[trough_2] << endl;
+    cout << "Trough 3 index: " << trough_3 << " Value: " << arr[trough_3] << endl;
 }
 
 int main ()

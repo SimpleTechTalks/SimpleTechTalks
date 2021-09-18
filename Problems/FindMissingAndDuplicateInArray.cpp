@@ -11,6 +11,7 @@ void print_missing_and_duplicate (int missing, int duplicate)
 {
     int arr[MAX_ARRAY_SIZE] = {0};
 
+    /* creating the array with missing and duplicate value */
     for (int i = 0; i < MAX_ARRAY_SIZE; i++)
     {
         if (i == missing)
@@ -78,24 +79,27 @@ void check_missing ()
  * Find the maximum repeating number in this array.
  * 
  */
+#define MAX_ARRAY_SIZE_REPEATING 15
 void find_max_repeating_number_in_array ()
 {
-    int arr[MAX_ARRAY_SIZE] = {0};
+    int arr[MAX_ARRAY_SIZE_REPEATING] = {0};
 
-    for (int i = 0; i < MAX_ARRAY_SIZE; i++)
+    for (int i = 0; i < MAX_ARRAY_SIZE_REPEATING; i++)
     {
-        arr[i] = rand() % MAX_ARRAY_SIZE;
+        arr[i] = rand() % MAX_ARRAY_SIZE_REPEATING;
+        cout << arr[i] << " ";
     }
+    cout << endl;
 
-    for (int i = 0; i < MAX_ARRAY_SIZE; i++)
+    for (int i = 0; i < MAX_ARRAY_SIZE_REPEATING; i++)
     {
-        arr[arr[i] % MAX_ARRAY_SIZE] += MAX_ARRAY_SIZE;
+        arr[arr[i] % MAX_ARRAY_SIZE_REPEATING] += MAX_ARRAY_SIZE_REPEATING;
     }
 
     int max = 0;
     int repeating_item = 0;
 
-    for (int i = 0; i < MAX_ARRAY_SIZE; i++)
+    for (int i = 0; i < MAX_ARRAY_SIZE_REPEATING; i++)
     {
         if (arr[i] > max)
         {
@@ -103,20 +107,22 @@ void find_max_repeating_number_in_array ()
             repeating_item = i;
         }
     }
-    cout << "Maximum Repeating Element is " << repeating_item << " and instances are " << max / MAX_ARRAY_SIZE << endl;
+    cout << "Maximum Repeating Element is " << repeating_item << " and instances are " << max / MAX_ARRAY_SIZE_REPEATING << endl;
 }
 
 void find_max_repeating_number_in_array_method2 ()
 {
-    int arr[MAX_ARRAY_SIZE] = {0};
+    int arr[MAX_ARRAY_SIZE_REPEATING] = {0};
 
-    for (int i = 0; i < MAX_ARRAY_SIZE; i++)
+    for (int i = 0; i < MAX_ARRAY_SIZE_REPEATING; i++)
     {
-        arr[i] = rand() % MAX_ARRAY_SIZE;
+        arr[i] = rand() % MAX_ARRAY_SIZE_REPEATING;
+        cout << arr[i] << " ";
     }
+    cout << endl;
 
-    int count[MAX_ARRAY_SIZE] = {0};
-    for (int i = 0; i < MAX_ARRAY_SIZE; i++)
+    int count[MAX_ARRAY_SIZE_REPEATING] = {0};
+    for (int i = 0; i < MAX_ARRAY_SIZE_REPEATING; i++)
     {
         count[arr[i]] += 1;
     }
@@ -124,7 +130,7 @@ void find_max_repeating_number_in_array_method2 ()
     int max = 0;
     int repeating_item = 0;
 
-    for (int i = 0; i < MAX_ARRAY_SIZE; i++)
+    for (int i = 0; i < MAX_ARRAY_SIZE_REPEATING; i++)
     {
         if (count[i] > max)
         {
