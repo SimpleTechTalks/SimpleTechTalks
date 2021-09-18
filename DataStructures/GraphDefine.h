@@ -24,6 +24,8 @@ class Graph
         ~Graph ();
         bool isConnectedGraph ();
         bool printMotherVertex ();
+        void topologicalSort ();
+        void getEdgesIn2DFormat ();
 };
 
 Graph::~Graph ()
@@ -268,6 +270,70 @@ bool Graph::printMotherVertex ()
         cout << "Graph is directed and not connected, mother vertex not possible." << endl;
         return false;
     }
+}
+
+void Graph::getEdgesIn2DFormat ()
+{
+    cout << "Printing edges in 2D format!!" << endl;
+    for (int i = 0; i < m_nodes; i++)
+    {
+        for (int j = 0; j < m_nodes; j++)
+        {
+            cout << edges[i][j] << "  ";
+        }
+        cout << endl;
+    }
+}
+
+void Graph::topologicalSort ()
+{
+    int indegree[m_nodes] = {0};
+
+    for (int i = 0; i < m_nodes; i++)
+    {
+        for (int j = 0; j < m_nodes; j++)
+        {
+            if (i == j)
+                continue;
+            if (edges[i][j])
+                indegree[j]++;
+        }
+    }
+
+    cout << "Printing indegree of nodes" << endl;
+    Queue q(m_nodes);
+    for (int i = 0; i < m_nodes; i++)
+    {
+        cout << indegree[i] << "  ";
+        if (indegree[i] == 0)
+        {
+            q.enqueue (i);
+        }
+    }
+    cout << endl;
+
+    cout << "Printing Topological sort !!" << endl;
+    int counter = 0;
+    while (!q.isEmpty ())
+    {
+        counter++;
+        int node = q.dequeue ();
+        cout << node << "  ";
+
+        for (int j = 0; j < m_nodes; j++)
+        {
+            if (node == j)
+                continue;
+            if (edges[node][j] == 1)
+            {
+                if (--indegree[j] == 0)
+                    q.enqueue (j);
+            }
+        }
+    }
+    cout << endl;
+    if (counter != m_nodes)
+        cout << "Graph has cycles, topological sort not possible !!" << endl;
 }
 
 #endif /* _PRACTICE_GRAPH_DEFINE_H_ */
