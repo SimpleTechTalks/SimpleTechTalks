@@ -6,7 +6,9 @@
 class HashingDoubleHashing: public Hashing
 {
 	public:
+		bool disable_log;
 		HashingDoubleHashing (int size);
+		HashingDoubleHashing (int size, bool log);
 		~HashingDoubleHashing ();
 		int second_hash_function (int key);
 		void insert_data (int data);
@@ -14,7 +16,10 @@ class HashingDoubleHashing: public Hashing
 		bool search_data (int data);
 };
 
-HashingDoubleHashing::HashingDoubleHashing (int size): Hashing (size)
+HashingDoubleHashing::HashingDoubleHashing (int size): Hashing (size), disable_log (false)
+{}
+
+HashingDoubleHashing::HashingDoubleHashing (int size, bool log): Hashing (size), disable_log (log)
 {}
 
 HashingDoubleHashing::~HashingDoubleHashing ()
@@ -50,7 +55,8 @@ void HashingDoubleHashing::delete_data (int data)
 		int count = 1;
 		while (m_hash_table[index] != 0) {
 			if (m_hash_table[index] == data) {
-				cout << "Data " << data << " Found in hash table, deleting !!!" << endl;
+				if (!disable_log)
+					cout << "Data " << data << " Found in hash table, deleting !!!" << endl;
 				m_hash_table[index] = 0;
 				m_entries--;
 				return;
@@ -59,7 +65,8 @@ void HashingDoubleHashing::delete_data (int data)
 			count++;
 		}
 	}
-	cout << "Data " << data << " Not Found in hash table, nothing to delete !!!" << endl;
+	if (!disable_log)
+		cout << "Data " << data << " Not Found in hash table, nothing to delete !!!" << endl;
 	return;
 }
 
@@ -72,14 +79,16 @@ bool HashingDoubleHashing::search_data (int data)
 		int count = 1;
 		while (m_hash_table[index] != 0) {
 			if (m_hash_table[index] == data) {
-				cout << "Data " << data << " Found in hash table !!!" << endl;
+				if (!disable_log)
+					cout << "Data " << data << " Found in hash table !!!" << endl;
 				return true;
 			}
 			index = (index_start + index_second * count) % get_size ();
 			count++;
 		}
 	}
-	cout << "Data " << data << " Not Found in hash table !!!" << endl;
+	if (!disable_log)
+		cout << "Data " << data << " Not Found in hash table !!!" << endl;
 	return false;
 }
 
