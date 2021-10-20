@@ -19,6 +19,7 @@ class Graph
         int getNumberOfEdges ();
         void getEdges ();
         bool addEdge (int srcNode, int dstNode);
+        bool addEdgeWithWeight (int srcNode, int dstNode, int weight);
         void BFS (int start);
         void DFS (int start);
         ~Graph ();
@@ -26,6 +27,9 @@ class Graph
         bool printMotherVertex ();
         void topologicalSort ();
         void getEdgesIn2DFormat ();
+        void shortestPathInUnweightedGraph (int srcNode);
+        void shortestPathInWeightedGraph (int srcNode);
+        void shortestPathInWeightedGraph_dijkstra (int srcNode);
 };
 
 Graph::~Graph ()
@@ -117,6 +121,29 @@ bool Graph::addEdge (int srcNode, int dstNode)
         edges[dstNode][srcNode] = 1;
         ++m_edges;
     }
+    return true;
+}
+
+bool Graph::addEdgeWithWeight (int srcNode, int dstNode, int weight)
+{
+    if (isUndirected) {
+        cout << "Weighted graph not defined for undirected graph" << endl;
+        return false;
+    }
+    if (srcNode >= m_nodes || dstNode >= m_nodes)
+    {
+        cout << "srcNode " << srcNode << " or dstNode " << dstNode << " is out of known max node: " << m_nodes << endl;
+        return false;
+    }
+
+    if (edges[srcNode][dstNode])
+    {
+        cout << "srcNode " << srcNode << " or dstNode " << dstNode << " is already existed." << endl;
+        return false;
+    }
+
+    edges[srcNode][dstNode] = weight;
+    ++m_edges;
     return true;
 }
 
@@ -334,6 +361,137 @@ void Graph::topologicalSort ()
     cout << endl;
     if (counter != m_nodes)
         cout << "Graph has cycles, topological sort not possible !!" << endl;
+}
+
+void Graph::shortestPathInUnweightedGraph (int srcNode)
+{
+    int distance[m_nodes];
+    int path[m_nodes];
+    for (int i = 0; i < m_nodes; i++) {
+        distance[i] = -1;
+        path[i] = -1;
+    }
+
+    Queue q(m_nodes);
+    q.enqueue (srcNode);
+    distance[srcNode] = 0;
+    path[srcNode] = srcNode;
+
+    while (!q.isEmpty ()) {
+        int cur_node = q.dequeue ();
+        if (distance[cur_node] == -1) {
+            cout << "Incorrect distance set for node: " << cur_node << endl;
+        }
+        for (int j = 0; j < m_nodes; j++) {
+            if (edges[cur_node][j] == 1 && distance[j] == -1) {
+                distance[j] = distance[cur_node] + 1;
+                q.enqueue (j);
+                path[j] = cur_node;
+            }
+        }
+    }
+    for (int i = 0; i < m_nodes; i++) {
+        cout <<"Node: " << i << " distance: " << distance[i] << " from Node: " << path[i] << endl;
+    }
+}
+
+/* Bellman Ford's algorithm */
+void Graph::shortestPathInWeightedGraph (int srcNode)
+{
+    int distance[m_nodes];
+    int path[m_nodes];
+    for (int i = 0; i < m_nodes; i++) {
+        distance[i] = -1;
+        path[i] = -1;
+    }
+
+    Queue q(m_nodes);
+    q.enqueue (srcNode);
+    distance[srcNode] = 0;
+    path[srcNode] = srcNode;
+
+    while (!q.isEmpty ()) {
+        int cur_node = q.dequeue ();
+        if (distance[cur_node] == -1) {
+            cout << "Incorrect distance set for node: " << cur_node << endl;
+        }
+        for (int j = 0; j < m_nodes; j++) {
+            if (edges[cur_node][j]) {
+                if (distance[j] == -1) {
+                    distance[j] = distance[cur_node] + edges[cur_node][j];
+                    q.enqueue (j);
+                    path[j] = cur_node;
+                } else if (distance[j] > distance[cur_node] + edges[cur_node][j]) {
+                    distance[j] = distance[cur_node] + edges[cur_node][j];
+                    //q.enqueue (j);
+                    path[j] = cur_node;
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i < m_nodes; i++) {
+        bool exit = false;
+        for (int j = 0; j < m_nodes; j++) {
+            if (distance[j] > distance[i] + edges[i][j]) {
+                cout << "Negative cycle exists in Graph !!!" << endl;
+                exit = true;
+                break;
+            }
+        }
+        if (exit)
+            break;
+    }
+
+    for (int i = 0; i < m_nodes; i++) {
+        cout <<"Node: " << i << " distance: " << distance[i] << " from Node: " << path[i] << endl;
+    }
+}
+
+/* Dijkstra's algorithm */
+void Graph::shortestPathInWeightedGraph_dijkstra (int srcNode)
+{
+    int distance[m_nodes];
+    int path[m_nodes];
+    bool visited[m_nodes];
+    for (int i = 0; i < m_nodes; i++) {
+        if (edges[srcNode][i])
+            distance[i] = edges[srcNode][i];
+        else
+            distance[i] = 9999;
+        path[i] = srcNode;
+        visited[i] = false;
+    }
+
+    distance[srcNode] = 0;
+    path[srcNode] = srcNode;
+    visited[srcNode] = true;
+    for (int i = 0; i < m_nodes; i++) {
+        if (i == srcNode)
+            continue;
+        int min_wt = 9999, min_node = 0;
+        for (int j = 0; j < m_nodes; j++) {
+            if (!visited[j]) {
+                if (distance[j] < min_wt) {
+                    min_wt = distance[j];
+                    min_node = j;
+                }
+            }
+        }
+        visited[min_node] = true;
+        for (int k = 0; k < m_nodes; k++) {
+            if (!visited[k] && edges[min_node][k]) {
+                if (distance[k] > distance[min_node] + edges[min_node][k]) {
+                    distance[k] = distance[min_node] + edges[min_node][k];
+                    path[k] = min_node;
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i < m_nodes; i++) {
+        cout <<"Node: " << i << " distance: " << distance[i] << " from Node: " << path[i] << endl;
+    }
 }
 
 #endif /* _PRACTICE_GRAPH_DEFINE_H_ */
