@@ -10,6 +10,26 @@ void add_header (const char *line)
     cout << "========================================================================" << endl;
 }
 
+void weightedGraphFunctionality ()
+{
+    Graph g(7, false);
+    g.addEdgeWithWeight (0, 1, 3);
+    g.addEdgeWithWeight (0, 2, 2);
+    g.addEdgeWithWeight (0, 3, 6);
+    g.addEdgeWithWeight (2, 1, 2);
+    g.addEdgeWithWeight (1, 4, 6);
+    g.addEdgeWithWeight (1, 5, 1);
+    g.addEdgeWithWeight (4, 6, 1);
+    g.addEdgeWithWeight (5, 6, 5);
+    g.addEdgeWithWeight (3, 6, 2);
+    g.addEdgeWithWeight (1, 5, 3);
+    g.addEdgeWithWeight (1, 0, -4);
+    add_header ("Finding shortest path in weighted graph from Node 0 using Bellman's Ford algo");
+    g.shortestPathInWeightedGraph (0);
+    add_header ("Finding shortest path in weighted graph from Node 0 using Dijkstra algo");
+    g.shortestPathInWeightedGraph_dijkstra (0);
+}
+
 int main ()
 {
     Graph g(5, true);
@@ -82,4 +102,9 @@ int main ()
     g2.addEdge (9,10);
     g2.getEdgesIn2DFormat ();
     g2.topologicalSort ();
+    add_header ("Finding shortest path from Node 6");
+    g2.shortestPathInUnweightedGraph (6);
+    add_header ("Finding shortest path from Node 0");
+    g2.shortestPathInUnweightedGraph (0);
+    weightedGraphFunctionality ();
 }
