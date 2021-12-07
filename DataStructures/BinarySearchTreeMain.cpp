@@ -103,7 +103,9 @@ void check_bst_simple_recursive ()
     lca = find_least_common_ancestor_in_bst (root, low, high);
     cout << " LCA node of " << low -> m_data << " and " << high -> m_data << " is: " << lca -> m_data << endl;
 
-    cout << "is above tree Binary Search Tree ? Answer -- " << isBst (root) << endl;
+    print_tree (root);
+    cout << "is above tree Binary Search Tree ? Answer -- " << isBst (root) << "-"
+            << isBstCorrect (root) << endl;
 
     BinarySearchTree<int>* parent = NULL;
     root = delete_element_in_bst_recursive (20, root, parent);
