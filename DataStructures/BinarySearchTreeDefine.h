@@ -9,6 +9,8 @@
 #ifndef _PRACTICE_BINARY_SEARCH_TREE_H_
 #define _PRACTICE_BINARY_SEARCH_TREE_H_
 
+#include <climits>
+
 template <typename T>
 class BinarySearchTree
 {
@@ -329,6 +331,7 @@ BinarySearchTree<T>* find_minimum_element_in_bst_using_iteration (BinarySearchTr
             return temp;
         }
     }
+    return temp;
 }
 
 template <typename T>
@@ -353,6 +356,7 @@ BinarySearchTree<T>* find_maximum_element_in_bst_using_iteration (BinarySearchTr
             return temp;
         }
     }
+    return temp;
 }
 
 template <typename T>
@@ -442,13 +446,32 @@ bool isBst (BinarySearchTree<T>* root)
     if (!root)
         return true;
 
-    if (root -> m_right && root -> m_data > root -> m_left -> m_data)
+    if (root -> m_right && root -> m_data > root -> m_right -> m_data)
         return false;
 
     if (root -> m_left && root -> m_data < root -> m_left -> m_data)
         return false;
 
     return (isBst (root -> m_left) && isBst (root -> m_right));
+}
+
+template <typename T>
+bool isBstUtil (BinarySearchTree<T>* root, int min, int max)
+{
+    if (!root)
+        return true;
+
+    if (root -> m_data < min && root -> m_data > max)
+        return false;
+
+    return (isBstUtil (root->m_left, min, root -> m_data - 1) &&
+            isBstUtil (root->m_right, root -> m_data + 1, max));
+}
+
+template <typename T>
+bool isBstCorrect (BinarySearchTree<T>* root)
+{
+    return isBstUtil (root, INT_MIN, INT_MAX);
 }
 
 #endif /* _PRACTICE_BINARY_SEARCH_TREE_H_ */
