@@ -4,6 +4,8 @@
 #include "QueueDefine.h"
 #include "StackDefine.h"
 
+using namespace std;
+
 class Graph
 {
     private:
