@@ -429,6 +429,12 @@ void check_postorder_successor ()
     BinaryTree* node10 = new BinaryTree (10);
 
     /* Set node5 as root node */
+    /*
+                5
+            3       7
+        2      4  6     9
+    1                 8      10
+    */
     BinaryTree* root = node5;
     node5 -> m_left = node3;
     node3 -> m_left = node2;
@@ -454,6 +460,90 @@ void check_postorder_successor ()
     check_postorder_successor_helper (root, 8);
     check_postorder_successor_helper (root, 9);
     check_postorder_successor_helper (root, 10);
+    cout << "Binary Tree is symmetric ? - " << is_binary_tree_symmetric (root, root) << endl;
+    BinaryTree* lca = least_common_ancestor (root, 8, 9);
+    cout << "LCA for node 8,9 is " << (lca ? lca->m_data: 0) << endl;
+    lca = least_common_ancestor (root, 1, 10);
+    cout << "LCA for node 1,10 is " << (lca ? lca->m_data: 0) << endl;
+    lca = least_common_ancestor (root, 1, 3);
+    cout << "LCA for node 1,3 is " << (lca ? lca->m_data: 0) << endl;
+    lca = least_common_ancestor (root, 8, 19);
+    cout << "LCA for node 8,19 is " << (lca ? lca->m_data: 0) << endl;
+    boundary_traversal (root);
+    cout << "==== Postorder successor end ====" << endl;
+}
+
+void check_symmetric ()
+{
+    BinaryTree* node1 = new BinaryTree (1);
+    BinaryTree* node2 = new BinaryTree (2);
+    BinaryTree* node3 = new BinaryTree (3);
+    BinaryTree* node4 = new BinaryTree (4);
+    BinaryTree* node5 = new BinaryTree (5);
+    BinaryTree* node6 = new BinaryTree (1);
+    BinaryTree* node7 = new BinaryTree (2);
+    BinaryTree* node8 = new BinaryTree (3);
+    BinaryTree* node9 = new BinaryTree (4);
+
+    /* Set node5 as root node */
+    /*
+                5
+            3       3
+        2      4   4     2 
+    1                       1
+    */
+    BinaryTree* root = node5;
+    node5 -> m_left = node3;
+    node3 -> m_left = node2;
+    node3 -> m_right = node4;
+    node2 -> m_left = node1;
+
+    node5 -> m_right = node8;
+    node8 -> m_right = node7;
+    node8 -> m_left = node9;
+    node7 -> m_right = node6;
+
+    print_tree (root);
+    cout << "Binary Tree is symmetric ? - " << is_binary_tree_symmetric (root, root) << endl;
+    cout << "Binary Tree is sum tree ? - " << is_binary_tree_sum_tree (root) << endl;
+    convert_tree_to_sum_tree (root);
+    print_tree (root);
+    cout << "Binary Tree is sum tree ? - " << is_binary_tree_sum_tree (root) << endl;
+}
+
+void check_sumtree ()
+{
+    BinaryTree* node1 = new BinaryTree (1);
+    BinaryTree* node2 = new BinaryTree (1);
+    BinaryTree* node3 = new BinaryTree (5);
+    BinaryTree* node4 = new BinaryTree (4);
+    BinaryTree* node5 = new BinaryTree (10);
+    BinaryTree* node6 = new BinaryTree (1);
+    BinaryTree* node7 = new BinaryTree (1);
+    BinaryTree* node8 = new BinaryTree (5);
+    BinaryTree* node9 = new BinaryTree (4);
+
+    /* Set node5 as root node */
+    /*
+                10
+            5       5
+        1      4   4     1 
+    1                       1
+    */
+    BinaryTree* root = node5;
+    node5 -> m_left = node3;
+    node3 -> m_left = node2;
+    node3 -> m_right = node4;
+    node2 -> m_left = node1;
+
+    node5 -> m_right = node8;
+    node8 -> m_right = node7;
+    node8 -> m_left = node9;
+    node7 -> m_right = node6;
+
+    print_tree (root);
+    cout << "Binary Tree is symmetric ? - " << is_binary_tree_symmetric (root, root) << endl;
+    cout << "Binary Tree is sum tree ? - " << is_binary_tree_sum_tree (root) << endl;
 }
 
 int main ()
@@ -469,4 +559,6 @@ int main ()
     //check_inorder_successor ();
     //check_preorder_successor ();
     check_postorder_successor ();
+    //check_symmetric ();
+    check_sumtree ();
 }

@@ -652,4 +652,176 @@ BinaryTree* find_postorder_successor (BinaryTree* root, BinaryTree* node)
     }
     return parent_node;
 }
+
+bool is_binary_tree_symmetric (BinaryTree* root1, BinaryTree* root2)
+{
+    if (!root1 && !root2)
+        return true;
+    if (!root1 || !root2)
+        return false;
+
+    if (root1->m_data != root2->m_data)
+        return false;
+
+    return is_binary_tree_symmetric (root1->m_left, root2->m_right) &&
+                is_binary_tree_symmetric (root1->m_right, root2->m_left);
+
+}
+
+int is_binary_tree_sum_tree_helper (BinaryTree* root)
+{
+    if (!root)
+        return 0;
+    if (!root->m_right && !root->m_left)
+        return root->m_data;
+    int right = is_binary_tree_sum_tree_helper (root->m_right);
+    int left = is_binary_tree_sum_tree_helper (root->m_left);
+
+    if (root->m_data = (right + left))
+        return root->m_data;
+    return -1;
+}
+
+bool is_binary_tree_sum_tree (BinaryTree* root)
+{
+    if (!root)
+        return true;
+    int right = is_binary_tree_sum_tree_helper (root->m_right);
+    int left = is_binary_tree_sum_tree_helper (root->m_left);
+
+    if (root->m_data == (right + left))
+        return true;
+    return false;
+}
+
+int convert_tree_to_sum_tree_helper (BinaryTree* root)
+{
+    if (!root)
+        return 0;
+    
+    if (!root->m_left && !root->m_right)
+        return root->m_data;
+
+    int right = convert_tree_to_sum_tree_helper (root->m_right);
+    int left = convert_tree_to_sum_tree_helper (root->m_left);
+
+    root->m_data = right + left;
+    return root->m_data;
+}
+
+void convert_tree_to_sum_tree (BinaryTree* root)
+{
+    if (!root)
+        return;
+
+    int right = convert_tree_to_sum_tree_helper (root->m_right);
+    int left = convert_tree_to_sum_tree_helper (root->m_left);
+
+    root->m_data = right + left;
+    return;    
+}
+
+BinaryTree* find_node (BinaryTree* root, int m, int n, bool* is_found_m, bool* is_found_n)
+{
+    if (!root)
+        return NULL;
+    
+    if (root->m_data == m || root ->m_data == n) {
+        *is_found_m |= (root->m_data == m);
+        *is_found_n |= (root->m_data == n);
+
+        if (!*is_found_n || !*is_found_m) {
+            find_node (root->m_left, m, n, is_found_m, is_found_n);
+            find_node (root->m_right, m, n, is_found_m, is_found_n);
+        }
+
+        return root;
+    }
+
+    BinaryTree* left = find_node (root->m_left, m, n, is_found_m, is_found_n);
+    BinaryTree* right = find_node (root->m_right, m, n, is_found_m, is_found_n);
+
+    if (left && right)
+        return root;
+    
+    return (left ? left : right);
+}
+
+BinaryTree* least_common_ancestor (BinaryTree* root, int m, int n)
+{
+    if (!root)
+        return NULL;
+    
+    if (root->m_data == m || root ->m_data == n)
+        return root;
+
+    bool is_m = false;
+    bool is_n = false;
+
+    BinaryTree* left = find_node (root->m_left, m, n, &is_m, &is_n);
+    BinaryTree* right = find_node (root->m_right, m, n, &is_m, &is_n);
+
+    if (!is_m || !is_n)
+        return NULL;
+
+    if (left && right)
+        return root;
+    
+    return (left ? left : right);
+}
+
+void print_path_to_left_most_node (BinaryTree* root)
+{
+    /* if leaf node thne it will be printed in 2nd step, ignore here */
+    if (!root->m_left && !root->m_right)
+        return;
+    cout << root->m_data << " ";
+
+    if (root->m_left)
+        print_path_to_left_most_node (root->m_left);
+    else if (root->m_right)
+        print_path_to_left_most_node (root->m_right);
+}
+
+void print_all_leaf_node (BinaryTree* root)
+{
+    if (!root)
+        return;
+
+    print_all_leaf_node (root->m_left);
+
+    if (!root->m_left && !root->m_right) {
+        cout << root->m_data << " ";
+        return;
+    }
+    
+    print_all_leaf_node (root->m_right);
+}
+
+void print_path_from_right_most_node (BinaryTree* root)
+{
+    /* if leaf node thne it will be printed in 2nd step, ignore here */
+    if (!root->m_left && !root->m_right)
+        return;
+
+    if (root->m_right)
+        print_path_from_right_most_node (root->m_right);
+    else if (root->m_left)
+        print_path_from_right_most_node (root->m_left);
+
+    cout << root->m_data << " ";
+}
+
+void boundary_traversal (BinaryTree* root)
+{
+    if (!root)
+        return;
+
+    /* Print path from root to left most node
+       Print all leaf node
+       Print path from right most node to root */
+    print_path_to_left_most_node (root);
+    print_all_leaf_node (root);
+    print_path_from_right_most_node (root->m_right);
+}
 #endif /* _PRACTICE_BINARY_TREE_H_ */
