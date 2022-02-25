@@ -3,6 +3,7 @@
 
 #include "QueueDefine.h"
 #include "StackDefine.h"
+#include "stdio.h"
 
 using namespace std;
 
@@ -152,7 +153,9 @@ bool Graph::addEdgeWithWeight (int srcNode, int dstNode, int weight)
 void Graph::BFS (int start)
 {
     cout << "Starting BFS traversing of Graph from Node: " << start << endl;
-    bool visited[m_nodes] = {false};
+    bool visited[m_nodes];
+    for (int i = 0; i < m_nodes; i++)
+        visited[i] = false;
 
     if (m_nodes == 0)
     {
@@ -200,7 +203,9 @@ void Graph::BFS (int start)
 void Graph::DFS (int start)
 {
     cout << "Starting DFS traversing of Graph from Node: " << start << endl;
-    bool visited[m_nodes] = {false};
+    bool visited[m_nodes];
+    for (int i = 0; i < m_nodes; i++)
+        visited[i] = false;
 
     if (m_nodes == 0)
     {
@@ -316,7 +321,9 @@ void Graph::getEdgesIn2DFormat ()
 
 void Graph::topologicalSort ()
 {
-    int indegree[m_nodes] = {0};
+    int indegree[m_nodes];
+    for (int i = 0; i < m_nodes; i++)
+        indegree[i] = 0;
 
     for (int i = 0; i < m_nodes; i++)
     {
@@ -403,30 +410,24 @@ void Graph::shortestPathInWeightedGraph (int srcNode)
     int distance[m_nodes];
     int path[m_nodes];
     for (int i = 0; i < m_nodes; i++) {
-        distance[i] = -1;
-        path[i] = -1;
+        distance[i] = 9999;
+        path[i] = 0;
     }
 
-    Queue q(m_nodes);
-    q.enqueue (srcNode);
     distance[srcNode] = 0;
     path[srcNode] = srcNode;
 
-    while (!q.isEmpty ()) {
-        int cur_node = q.dequeue ();
-        if (distance[cur_node] == -1) {
-            cout << "Incorrect distance set for node: " << cur_node << endl;
-        }
-        for (int j = 0; j < m_nodes; j++) {
-            if (edges[cur_node][j]) {
-                if (distance[j] == -1) {
-                    distance[j] = distance[cur_node] + edges[cur_node][j];
-                    q.enqueue (j);
-                    path[j] = cur_node;
-                } else if (distance[j] > distance[cur_node] + edges[cur_node][j]) {
-                    distance[j] = distance[cur_node] + edges[cur_node][j];
-                    //q.enqueue (j);
-                    path[j] = cur_node;
+    /* The shortest path of graph that contain V vertices, never contain more than "V-1" edges.
+       So we do here "V-1" iterations */
+    for (int i = 0; i < m_nodes-1; i++) {
+        for (int j = i; j < m_nodes; j++) {
+            for (int k = 0; k < m_nodes; k++) {
+                if (edges[j][k] != 0) {
+                    //printf ("%d -- %d -- %d -- %d -- %d -- %d -- %d\n", m_nodes, i, j, k, edges[j][k], distance[j], distance[k]);
+                    if (distance[j] != 9999 && distance[k] > distance[j] + edges[j][k]) {
+                        distance[k] = distance[j] + edges[j][k];
+                        path[k] = j;
+                    }
                 }
             }
         }
@@ -435,8 +436,8 @@ void Graph::shortestPathInWeightedGraph (int srcNode)
     for (int i = 0; i < m_nodes; i++) {
         bool exit = false;
         for (int j = 0; j < m_nodes; j++) {
-            if (distance[j] > distance[i] + edges[i][j]) {
-                cout << "Negative cycle exists in Graph !!!" << endl;
+            if (edges[i][j] != 0 && distance[j] > distance[i] + edges[i][j]) {
+                cout << "Negative edge cycle exists in Graph !!!" << endl;
                 exit = true;
                 break;
             }
@@ -472,6 +473,7 @@ void Graph::shortestPathInWeightedGraph_dijkstra (int srcNode)
         if (i == srcNode)
             continue;
         int min_wt = 9999, min_node = 0;
+        /* Pickup the node having minimum weight */
         for (int j = 0; j < m_nodes; j++) {
             if (!visited[j]) {
                 if (distance[j] < min_wt) {

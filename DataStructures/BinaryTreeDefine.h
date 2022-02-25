@@ -677,8 +677,8 @@ int is_binary_tree_sum_tree_helper (BinaryTree* root)
     int right = is_binary_tree_sum_tree_helper (root->m_right);
     int left = is_binary_tree_sum_tree_helper (root->m_left);
 
-    if (root->m_data = (right + left))
-        return root->m_data;
+    if (root->m_data == (right + left))
+        return root->m_data * 2;
     return -1;
 }
 
@@ -698,15 +698,13 @@ int convert_tree_to_sum_tree_helper (BinaryTree* root)
 {
     if (!root)
         return 0;
-    
-    if (!root->m_left && !root->m_right)
-        return root->m_data;
 
     int right = convert_tree_to_sum_tree_helper (root->m_right);
     int left = convert_tree_to_sum_tree_helper (root->m_left);
 
+    int old_val = root->m_data;
     root->m_data = right + left;
-    return root->m_data;
+    return root->m_data + old_val;
 }
 
 void convert_tree_to_sum_tree (BinaryTree* root)

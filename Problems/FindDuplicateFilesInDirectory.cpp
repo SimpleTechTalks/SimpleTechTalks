@@ -25,6 +25,8 @@ int main ()
 
 		map <size_t, string>::iterator it = file_content.find (hash_id);
 		if (it != file_content.end ()) {
+			/* We can compare the content of both the files.
+			   Here, i am assuming since file size is same, content will also be same. */
 			cout << "Duplicate file found: " << files[i][0] << " and " << it->second << endl;
 			continue;
 		}
