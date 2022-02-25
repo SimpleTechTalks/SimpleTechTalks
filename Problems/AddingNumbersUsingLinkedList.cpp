@@ -80,3 +80,39 @@ int main ()
 	delete_all_node (&list1);
 	delete_all_node (&list2);
 }
+/*  Version 2 -- most significant digit at the end --
+
+class ListNode {
+	public:
+      	int val;
+      	ListNode *next;
+     	ListNode() : val(0), next(nullptr) {}
+      	ListNode(int x) : val(x), next(nullptr) {}
+      	ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+ListNode* addTwoNumbersWithCarry (ListNode* l1, ListNode* l2, int carry)
+{
+	if (!l1 && !l2) {
+		if (carry) {
+			return new ListNode (carry);
+		}
+		return NULL;
+	}
+	int sum = 0;
+	if (!l1) {
+		sum = l2 -> val + carry;
+		return new ListNode (sum % 10, addTwoNumbersWithCarry (l1, l2->next, sum / 10));
+	} else if (!l2) {
+		sum = l1 -> val + carry;
+		return new ListNode (sum % 10, addTwoNumbersWithCarry (l1->next, l2, sum / 10));
+	} else {
+		sum = l1 -> val + l2 -> val + carry;
+		return new ListNode (sum % 10, addTwoNumbersWithCarry (l1->next, l2->next, sum / 10));
+	}
+}
+
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+	return addTwoNumbersWithCarry (l1, l2, 0);
+}
+*/

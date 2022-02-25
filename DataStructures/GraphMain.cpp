@@ -22,8 +22,9 @@ void weightedGraphFunctionality ()
     g.addEdgeWithWeight (4, 6, 1);
     g.addEdgeWithWeight (5, 6, 5);
     g.addEdgeWithWeight (3, 6, 2);
-    g.addEdgeWithWeight (1, 5, 3);
-    g.addEdgeWithWeight (1, 0, -4);
+    g.addEdgeWithWeight (5, 3, 1);
+    g.addEdgeWithWeight (1, 0, -5);
+    g.getEdgesIn2DFormat ();
     add_header ("Finding shortest path in weighted graph from Node 0 using Bellman's Ford algo");
     g.shortestPathInWeightedGraph (0);
     add_header ("Finding shortest path in weighted graph from Node 0 using Dijkstra algo");

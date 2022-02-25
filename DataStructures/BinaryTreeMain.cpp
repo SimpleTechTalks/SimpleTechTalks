@@ -1,7 +1,7 @@
 #include <iostream>
 
 using namespace std;
-
+#include "stdio.h"
 #include "BinaryTreeDefine.h"
 
 void print_tree (BinaryTree* root)
@@ -503,9 +503,11 @@ void check_symmetric ()
     node8 -> m_left = node9;
     node7 -> m_right = node6;
 
+    //print_tree (root);
+    //cout << "Binary Tree is symmetric ? - " << is_binary_tree_symmetric (root, root) << endl;
     print_tree (root);
-    cout << "Binary Tree is symmetric ? - " << is_binary_tree_symmetric (root, root) << endl;
     cout << "Binary Tree is sum tree ? - " << is_binary_tree_sum_tree (root) << endl;
+    print_tree (root);
     convert_tree_to_sum_tree (root);
     print_tree (root);
     cout << "Binary Tree is sum tree ? - " << is_binary_tree_sum_tree (root) << endl;
@@ -515,18 +517,18 @@ void check_sumtree ()
 {
     BinaryTree* node1 = new BinaryTree (1);
     BinaryTree* node2 = new BinaryTree (1);
-    BinaryTree* node3 = new BinaryTree (5);
+    BinaryTree* node3 = new BinaryTree (6);
     BinaryTree* node4 = new BinaryTree (4);
-    BinaryTree* node5 = new BinaryTree (10);
+    BinaryTree* node5 = new BinaryTree (24);
     BinaryTree* node6 = new BinaryTree (1);
     BinaryTree* node7 = new BinaryTree (1);
-    BinaryTree* node8 = new BinaryTree (5);
+    BinaryTree* node8 = new BinaryTree (6);
     BinaryTree* node9 = new BinaryTree (4);
 
     /* Set node5 as root node */
     /*
-                10
-            5       5
+                24
+            6       6
         1      4   4     1 
     1                       1
     */
@@ -560,5 +562,5 @@ int main ()
     //check_preorder_successor ();
     check_postorder_successor ();
     //check_symmetric ();
-    check_sumtree ();
+    //check_sumtree ();
 }
